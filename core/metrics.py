@@ -48,23 +48,37 @@ def get_products_metrics():
 
 
 def get_sales_metrics():
+    best_selling_name = best_selling_quantity = underground_name = underground_quantity = None
     outflows = Outflow.objects.all()
     selled_products = Product.objects\
         .annotate(selled_quantity=Sum("outflows__quantity", default=0))
     best_selling_product = selled_products\
         .order_by("-selled_quantity")\
-        .first()
+        .first() or None
+
+    if best_selling_product:
+        best_selling_name = best_selling_product.title
+        best_selling_quantity = best_selling_product.selled_quantity
+
     underground_product = selled_products\
         .order_by("selled_quantity")\
-        .first()
-    total_spent = outflows.aggregate(total=Sum(F("quantity") * F("product__cost_price")))['total']
+        .first() or None
 
-    total_invoiced = outflows.aggregate(total=Sum(F("quantity") * F("product__selling_price")))['total']
-    profit_margin = (total_invoiced - total_spent) / total_spent * 100
+    if underground_product:
+        underground_name = underground_product.title
+        underground_quantity = underground_product.selled_quantity
+
+    total_spent = outflows.aggregate(total=Sum(F("quantity") * F("product__cost_price")))['total'] or 0
+
+    total_invoiced = outflows.aggregate(total=Sum(F("quantity") * F("product__selling_price")))['total'] or 0
+
+    profit_margin = 0
+    if total_spent > 0:
+        profit_margin = (total_invoiced - total_spent) / total_spent * 100
 
     sales_matrics = {
-        "best_seller_product": {'name': best_selling_product.title, 'value': best_selling_product.selled_quantity},
-        "underground_product": {'name': underground_product.title, 'value': underground_product.selled_quantity},
+        "best_seller_product": {'name': best_selling_name, 'value': best_selling_quantity},
+        "underground_product": {'name': underground_name, 'value': underground_quantity},
         "total_invoiced": number_format(total_invoiced, decimal_pos=2, force_grouping=True),
         "profit_margin": number_format(profit_margin, decimal_pos=0)
     }
