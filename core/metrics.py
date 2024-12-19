@@ -9,7 +9,7 @@ def get_products_metrics():
     products = Product.objects.all()
     products_quantity = products.count() or 0
     higher_profit = lower_profit = {
-        'name': '',
+        'name': None,
         'value': 0
     }
     lower_qty = {
@@ -17,7 +17,7 @@ def get_products_metrics():
             'value': 0
         }
 
-    lower_qty_product = products.order_by('quantity').first()
+    lower_qty_product = products.order_by('quantity').first() or None
     if lower_qty_product:
         lower_qty = {
             'name': lower_qty_product.title,
