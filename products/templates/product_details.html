@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}
+IM - Product Details
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+	<h4 class="mb-5 text-center">Product Details</h4>
+	<div class="card">
+		<div class="card-body">
+			<h4 class="card-title">{{ product.title }}</h4>
+			<p class="card-text">{{ product.description }}</p>
+			<table class="table table-hover">
+				<tbody>
+					<tr>
+						<td>Brand</td>
+						<td>{{ product.brand.name }}</td>
+					</tr>
+					<tr>
+						<td>Category</td>
+						<td>{{ product.category.name }}</td>
+					</tr>
+					<tr>
+						<td>Serie number</td>
+						<td>{{ product.serie_number }}</td>
+					</tr>
+					<tr>
+						<td>Cost Price</td>
+						<td>{{ product.cost_price }}</td>
+					</tr>
+					<tr>
+						<td>Selling Price</td>
+						<td>{{ product.selling_price }}</td>
+					</tr>
+					<tr>
+						<td>Quantity</td>
+						<td>{{ product.quantity }}</td>
+					</tr>
+					<tr>
+						<td>created_at</td>
+						<td>{{ product.created_at }}</td>
+					</tr>
+					<tr>
+						<td>updated_at</td>
+						<td>{{ product.updated_at }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="card-footer">
+			<a href="{% url 'products_list' %}" class="btn btn-secondary">Return to products list</a>
+			<a href="{% url 'product_update' product.pk %}" class="btn btn-warning ms-2">Update product</a>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

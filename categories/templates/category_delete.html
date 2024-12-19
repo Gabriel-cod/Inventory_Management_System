@@ -1,0 +1,22 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{ category.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to delete this category?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="h6">Category name: {{ category.name }}</p>
+        <p class="h6">Description: {{ category.description }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form action="{% url 'category_delete' category.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger" value="Confirm">I'm sure, delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

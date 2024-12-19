@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}
+IM - Home
+{% endblock %}
+
+{% block content %}
+
+{% include 'components/_products_metrics.html' %}
+<br>
+{% include 'components/_sales_metrics.html' %}
+<br>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="row justify-content-evenly">
+    
+    <div class="col-md-6 text-center">
+        <h4 class="text-center mb-4">Sales Value (last 7 days)</h4>
+        <canvas id="dailySalesChart"></canvas>
+    </div>
+
+    <div class="col-md-6 text-center">
+        <h4 class="text-center mb-4">Daily Sales Quantity</h4>
+        <canvas id="dailySalesQuantityChart"></canvas>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var dailySalesData = JSON.parse('{{ daily_sales_data|safe }}');
+            var dailySalesQuantityData = JSON.parse('{{ daily_sales_quantity_data|safe }}');
+
+            var ctxDailySales = document.getElementById('dailySalesChart').getContext('2d');
+            var dailySalesChart = new Chart(ctxDailySales, {
+                type: 'line',
+                data: {
+                    labels: dailySalesData.dates,
+                    datasets: [{
+                        label: 'Sales Value',
+                        data: dailySalesData.values,
+                        fill: false,
+                        borderColor: '#FFBB00',
+                        borderWidht: 2,
+                        tension: 0.5
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            })
+
+            var ctxDailySalesQuantity = document.getElementById('dailySalesQuantityChart').getContext('2d');
+            var dailySalesQuantityChart = new Chart(ctxDailySalesQuantity, {
+                type: 'bar',
+                data: {
+                    labels: dailySalesQuantityData.dates,
+                    datasets: [{
+                        label: 'Sales Quantity',
+                        data: dailySalesQuantityData.values,
+                        backgroundColor: '#FF6700',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidht: 1,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            })
+        })
+    </script>
+</div>
+
+
+<div class="row justify-content-evenly">
+    
+    <div class="col-md-6 text-center">
+        <h4 class="text-center mb-4">Sales Value (last 7 days)</h4>
+        <canvas id="dailySalesChart"></canvas>
+    </div>
+
+    <div class="col-md-6 text-center">
+        <h4 class="text-center mb-4">Daily Sales Quantity</h4>
+        <canvas id="dailySalesQuantityChart"></canvas>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var dailySalesData = JSON.parse('{{ daily_sales_data|safe }}');
+            var dailySalesQuantityData = JSON.parse('{{ daily_sales_quantity_data|safe }}');
+
+            var ctxDailySales = document.getElementById('dailySalesChart').getContext('2d');
+            var dailySalesChart = new Chart(ctxDailySales, {
+                type: 'line',
+                data: {
+                    labels: dailySalesData.dates,
+                    datasets: [{
+                        label: 'Sales Value',
+                        data: dailySalesData.values,
+                        fill: false,
+                        borderColor: '#FFBB00',
+                        borderWidht: 2,
+                        tension: 0.5
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            })
+
+            var ctxDailySalesQuantity = document.getElementById('dailySalesQuantityChart').getContext('2d');
+            var dailySalesQuantityChart = new Chart(ctxDailySalesQuantity, {
+                type: 'bar',
+                data: {
+                    labels: dailySalesQuantityData.dates,
+                    datasets: [{
+                        label: 'Sales Quantity',
+                        data: dailySalesQuantityData.values,
+                        backgroundColor: '#FF6700',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidht: 1,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            })
+        })
+    </script>
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+IM - Create Brand
+{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+	<h4 class="mb-5">{{ title }}</h4>
+	<div class="row">
+		<div class="card">
+			<div class="card-body">
+				{% if brand_id %}
+				<form action="{% url post_url brand_id %}" method="post">
+				{% else %}
+				<form action="{% url post_url %}" method="post">
+				{% endif %}
+					{% csrf_token %}
+					<div class="form-floating mb-3">
+						{{ form.name.helptext }}
+						{{ form.name }}
+						<label for="id_name">Brand Name</label>
+					</div>
+					<div class="form-floating mb-3">
+						{{ form.description.helptext }}
+						{{ form.description }}
+						<label for="id_description">Description</label>
+					</div>
+					<a href="{% url 'brands_list' %}" class="btn btn-danger">Cancel</a>
+					<button type="submit" class="btn btn-success">Save Brand</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

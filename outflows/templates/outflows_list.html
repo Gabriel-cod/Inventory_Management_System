@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+IM - Outflows List
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<h4 class="mb-5 text-center">Outflows List</h4>
+
+	{% include 'components/_sales_metrics.html' %}
+
+	<div class="mb-5"></div>
+
+	<div class="row justify-content-between mb-3">
+		<div class="col-md-6">
+			<form action="{% url 'outflows_list' %}" method="get">
+				<div class="input-group">
+					<input type="text" class="form-control" name="product" placeholder="Product" value="{{ request.GET.product }}">
+					<button type="submit" class="btn btn-primary">
+						<i class="bi bi-search"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+		
+		<div class="col-md-6">
+			<a href="{% url 'outflows_register' %}" class="btn btn-success float-end"><i class="bi bi-plus-lg"></i><span class="ms-2">Register Outflow</span></a>
+		</div>
+	</div>
+
+	<div class="row justify-content-center">
+		<div class="card">
+			<div class="card-body">
+				<table class="table table-striped table-hover table-bordered">
+					<thead class="thead">
+						<tr>
+							<th class="col">ID</th>
+							<th class="col">Product</th>
+							<th class="col">Quantity</th>
+							<th class="col">outflow Date</th>
+							<th class="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for outflow in outflows %}
+						<tr>
+							<td>{{ outflow.id }}</td>
+							<td>{{ outflow.product.title }}</td>
+							<td>{{ outflow.quantity }}</td>
+							<td>{{ outflow.created_at }}</td>
+							<td class="text-center">
+								<a type="button" class="my-1 btn btn-info btn-sm" href="{% url 'outflow_details' outflow.pk %}">
+									<i class="bi bi-eye"></i>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% include 'components/_pagination.html' %}
+{% endblock %}

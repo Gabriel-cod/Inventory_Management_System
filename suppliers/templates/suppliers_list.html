@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+IM - Suppliers List
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<h4 class="mb-5 text-center">Suppliers List</h4>
+
+	<div class="row justify-content-between mb-3">
+		<div class="col-md-6">
+			<form action="{% url 'suppliers_list' %}" method="get">
+				<div class="input-group">
+					<input type="text" class="form-control" name="name" placeholder="Name" value="{{ request.GET.name }}">
+					<button type="submit" class="btn btn-primary">
+						<i class="bi bi-search"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+		
+		<div class="col-md-6">
+			<a href="{% url 'suppliers_create' %}" class="btn btn-success float-end"><i class="bi bi-plus-lg"></i><span class="ms-2">New Supplier</span></a>
+		</div>
+	</div>
+
+	<div class="row justify-content-center">
+		<div class="card">
+			<div class="card-body">
+				<table class="table table-striped table-hover table-bordered">
+					<thead class="thead">
+						<tr>
+							<th class="col">ID</th>
+							<th class="col-md-4">Name</th>
+							<th class="col-md-6">Description</th>
+							<th class="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for supplier in suppliers %}
+						{% include 'supplier_delete.html' %}
+						<tr>
+							<td>{{ supplier.id }}</td>
+							<td>{{ supplier.name }}</td>
+							<td>{{ supplier.description }}</td>
+							<td class="text-center">
+								<a type="button" class="my-1 btn btn-info btn-sm" href="{% url 'supplier_details' supplier.pk %}">
+									<i class="bi bi-eye"></i>
+								</a>
+								<a type="button" class="my-1 btn btn-warning btn-sm" href="{% url 'supplier_update' supplier.pk %}">
+									<i class="bi bi-pencil-square"></i>
+								</a>
+								<button type="button" class="my-1 btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{ supplier.id }}">
+									<i class="bi bi-trash"></i>
+								</button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% include 'components/_pagination.html' %}
+{% endblock %}

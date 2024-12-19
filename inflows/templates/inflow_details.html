@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+IM - Inflow Details
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+	<h4 class="mb-5 text-center">Inflow Details</h4>
+	<div class="card">
+		<div class="card-body">
+			<h4 class="card-title">{{ inflow.product.title }} - {{ inflow.created_at }}</h4>
+			<p class="card-text"><strong>Supplier:</strong> {{ inflow.supplier.name }}</p>
+			<p class="card-text"><strong>Quantity:</strong> {{ inflow.quantity }}</p>
+			<p class="card-text"><strong>Inflow Date:</strong> {{ inflow.created_at }}</p>
+			<p class="card-text"><strong>Inflow Update at:</strong> {{ inflow.updated_at }}</p>
+		</div>
+		<div class="card-footer">
+			<a href="{% url 'inflows_list' %}" class="btn btn-secondary">Return to Inflows list</a>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

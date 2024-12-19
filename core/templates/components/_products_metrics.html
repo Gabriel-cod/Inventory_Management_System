@@ -1,0 +1,44 @@
+<div class="card">
+	<div class="card-body">
+		<div class="row">
+
+			<div class="col-md-3 my-2">
+				<div class="card border-primary h-100">
+					<div class="card-body text-white">
+						<h6 class="card-title text-body-secondary">Products Quantity</h6>
+						<p class="card-text display-6 font-weight-bold">{{ products_metrics.quantity }}</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 my-2">
+				<div class="card border-success h-100">
+					<div class="card-body text-white">
+						<h6 class="card-title text-body-secondary">Higher Profit Margin Product</h6>
+						<p class="card-text h4 font-weight-bold">{{ products_metrics.higher_profit.name }}<br/>{{ products_metrics.higher_profit.value }}%</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 my-2">
+				<div class="card border-warning h-100">
+					<div class="card-body text-white">
+						<h6 class="card-title text-body-secondary">Lower Profit Margin Product</h6>
+						<p class="card-text h3 font-weight-bold">{{ products_metrics.lower_profit.name }}<br/>{{ products_metrics.lower_profit.value }}%</p>
+						<span></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 my-2">
+				<div class="card border-danger h-100">
+					<div class="card-body text-white">
+						<h6 class="card-title text-body-secondary">Lower Quantity Product</h6>
+						<p class="card-text h3 font-weight-bold">{{ products_metrics.lower_qty.name }}<br/>{{ products_metrics.lower_qty.value }}</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+IM - Products List
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+	<h4 class="mb-5 text-center">Products List</h4>
+
+	{% include 'components/_products_metrics.html' %}
+
+	<div class="mb-5"></div>
+
+	<div class="row mb-3">
+		<div class="col-sm-4">
+			<form action="{% url 'products_list' %}" method="get">
+				<div class="input-group">
+					<input type="text" class="form-control" name="title" placeholder="Product Title" value="{{ request.GET.title }}">
+					<button type="submit" class="btn btn-primary">
+						<i class="bi bi-search"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-sm-4">
+			<form action="{% url 'products_list' %}" method="get">
+				<div class="input-group">
+					<select class="form-select" aria-label="Default select example" name="brand" aria-selected="{{ request.GET.brand }}">
+						<option {% if not request.GET.brand %} selected {% endif %}>Brand</option>
+						{% for brand in brands %}
+						{% if brand.name == request.GET.brand %}
+						<option value="{{ brand }}" selected><p class="text-capitalize">{{ brand }}</p></option>
+						{% else %}
+						<option value="{{ brand }}"><p class="text-capitalize">{{ brand }}</p></option>
+						{% endif %}
+					{% endfor %}
+				</select>
+				<select class="form-select" aria-label="Default select example" name="category" aria-selected="{{ request.GET.category }}">
+					<option selected>Category</option>
+					{% for category in categories %}
+					{% if category.name == request.GET.category %}
+					<option value="{{ category }}" selected><p class="text-capitalize">{{ category }}</p></option>
+					{% else %}
+					<option value="{{ category }}"><p class="text-capitalize">{{ category }}</p></option>
+					{% endif %}
+					{% endfor %}
+				</select>
+				<button class="btn btn-primary" type="submit">
+					<i class="bi bi-filter"></i>
+				</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="row justify-content-center">
+		<div class="card">
+			<div class="card-body">
+				<div class="col text-end mb-3">
+					<a href="{% url 'products_list' %}" class="btn btn-primary">Clear Filters</a>
+					<a href="{% url 'products_create' %}" class="btn btn-success"><i class="bi bi-plus-lg"></i><span class="ms-2">New Product</span></a>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped table-hover table-bordered">
+						<thead class="thead text-center align-middle">
+							<tr>
+							<th class="col">ID</th>
+							<th class="col">Title</th>
+							<th class="col">Brand</th>
+							<th class="col">Category</th>
+							<th class="col-sm-1">Qty.</th>
+							<th class="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for product in products %}
+						{% include 'product_delete.html' %}
+						<tr>
+							<td>{{ product.id }}</td>
+							<td>{{ product.title }}</td>
+							<td>{{ product.brand }}</td>
+							<td>{{ product.category }}</td>
+							<td>{{ product.quantity }}</td>
+							<td class="text-center">
+								<a type="button" class="my-1 btn btn-info btn-sm" href="{% url 'product_details' product.pk %}">
+									<i class="bi bi-eye"></i>
+								</a>
+								<a type="button" class="my-1 btn btn-warning btn-sm" href="{% url 'product_update' product.pk %}">
+									<i class="bi bi-pencil-square"></i>
+								</a>
+								<button type="button" class="my-1 btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{ product.id }}">
+									<i class="bi bi-trash"></i>
+								</button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% include 'components/_pagination.html' %}
+{% endblock %}
